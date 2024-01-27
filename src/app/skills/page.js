@@ -27,13 +27,13 @@ import AdminSkillsFormEdit from "@/components/SkillFormEdit"
 
 const SkillPage = () => {
 
-    const storedUser = JSON.parse(localStorage.getItem("PortFolioUser"));
-
     const [allSkills, setAllSkills] = useState([]);
 
     const [editSkillName, setEditSkillName] = useState('');
     const [editDescription, setEditDescription] = useState('');
     const [editProficiency, setEditProficiency] = useState();
+
+    const [userExist, setUserExist] = useState()
 
     const getSkills = async () => {
         try {
@@ -81,8 +81,11 @@ const SkillPage = () => {
         }
     }
 
+    // let storedUser;
 
     useEffect(() => {
+        const storedUser = JSON.parse(localStorage.getItem("PortFolioUser"));
+        setUserExist(storedUser)
         getSkills();
     }, []);
 
@@ -96,7 +99,7 @@ const SkillPage = () => {
                             <div className="flex justify-between items-center">
                                 <h2 className="text-2xl font-semibold text-white mb-2">{name}</h2>
                                 {
-                                    storedUser ? <div className="flex gap-1">
+                                    userExist ? <div className="flex gap-1">
                                         <AlertDialog>
                                             <AlertDialogTrigger className="bg-red-300 p-1 rounded-sm text-white hover:bg-red-400">Delete</AlertDialogTrigger>
                                             <AlertDialogContent>
