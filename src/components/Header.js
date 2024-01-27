@@ -61,7 +61,7 @@ export default function Header() {
                 >
                     Contact
                 </Link>
-                <div className="hidden md:visible">
+                <div className="hidden md:flex lg:">
                     {!user ? (
                         <Link
                             className={`bg-purple-500 p-1 rounded hover:bg-purple-800 ${activeLink === 5 ? 'border-b-4' : ''}`}

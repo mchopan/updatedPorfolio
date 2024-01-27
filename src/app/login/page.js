@@ -21,8 +21,11 @@ const LoginPage = () => {
     const handleLogin = async () => {
         try {
             const user = await axios.post("http://localhost:3000/api/users/login", { username, password })
+            let userDetails;
             if (user.data.foundUser) {
-                const userDetails = await localStorage.setItem("PortFolioUser", JSON.stringify(user.data.foundUser))
+                if (typeof window !== "undefined") {
+                    userDetails = await localStorage.setItem("PortFolioUser", JSON.stringify(user.data.foundUser));
+                }
                 setUser(userDetails)
                 console.log(user, "user in login")
                 toast({

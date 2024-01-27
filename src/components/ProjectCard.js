@@ -28,6 +28,9 @@ import { useState } from "react";
 
 const ProjectCard = ({ setProjects, _id, title, description, technologies, link }) => {
 
+
+    const storedUser = JSON.parse(localStorage.getItem("PortFolioUser"));
+
     const [editTitle, setEditTitle] = useState('');
     const [editLink, setEditLink] = useState('');
     const [editDescription, setEditDescription] = useState('');
@@ -68,44 +71,46 @@ const ProjectCard = ({ setProjects, _id, title, description, technologies, link 
         <div className=" w-[400px] cursor-pointer bg-opacity-70 bg-blur p-6 rounded-lg shadow-md hover:shadow-2xl transition duration-300 ease-in-out">
             <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-semibold text-white mb-2">{title}</h2>
-                <div className="flex gap-1">
-                    <AlertDialog>
-                        <AlertDialogTrigger className="bg-red-300 p-1 rounded-sm text-white hover:bg-red-400">Delete</AlertDialogTrigger>
-                        <AlertDialogContent>
-                            <AlertDialogHeader>
-                                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                <AlertDialogDescription>
-                                    This action cannot be undone. This will permanently be deleted
-                                </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction onClick={() => handleDelete(_id)}>Continue</AlertDialogAction>
-                            </AlertDialogFooter>
-                        </AlertDialogContent>
-                    </AlertDialog>
-                    <Dialog >
-                        <DialogTrigger onClick={() => { handleEdit(_id) }} className="bg-blue-300 p-1 rounded-sm text-white hover:bg-blue-400">Edit</DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle>Edit</DialogTitle>
-                                <DialogDescription>
-                                    <AdminProjectsFormEdit
-                                        _id={_id}
-                                        editTitle={editTitle}
-                                        setEditTitle={setEditTitle}
-                                        editLink={editLink}
-                                        setEditLink={setEditLink}
-                                        editDescription={editDescription}
-                                        setEditDescription={setEditDescription}
-                                        editTechnologies={editTechnologies}
-                                        setEditTechnologies={setEditTechnologies}
-                                    />
-                                </DialogDescription>
-                            </DialogHeader>
-                        </DialogContent>
-                    </Dialog>
-                </div>
+                {
+                    storedUser ? <div className="flex gap-1">
+                        <AlertDialog>
+                            <AlertDialogTrigger className="bg-red-300 p-1 rounded-sm text-white hover:bg-red-400">Delete</AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        This action cannot be undone. This will permanently be deleted
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction onClick={() => handleDelete(_id)}>Continue</AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
+                        <Dialog >
+                            <DialogTrigger onClick={() => { handleEdit(_id) }} className="bg-blue-300 p-1 rounded-sm text-white hover:bg-blue-400">Edit</DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>Edit</DialogTitle>
+                                    <DialogDescription>
+                                        <AdminProjectsFormEdit
+                                            _id={_id}
+                                            editTitle={editTitle}
+                                            setEditTitle={setEditTitle}
+                                            editLink={editLink}
+                                            setEditLink={setEditLink}
+                                            editDescription={editDescription}
+                                            setEditDescription={setEditDescription}
+                                            editTechnologies={editTechnologies}
+                                            setEditTechnologies={setEditTechnologies}
+                                        />
+                                    </DialogDescription>
+                                </DialogHeader>
+                            </DialogContent>
+                        </Dialog>
+                    </div> : null
+                }
             </div>
             <p className="text-gray-600 mb-4">{description}</p>
             <div className="mb-4">
