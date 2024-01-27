@@ -4,22 +4,22 @@ import Lottie from "lottie-react";
 import loader from "@/assets/loader.json";
 import Spline from "@splinetool/react-spline";
 
+
+
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 768);
+  const isSmallScreenInitial = typeof window !== "undefined" ? window.innerWidth <= 768 : false;
+  const [isSmallScreen, setIsSmallScreen] = useState(isSmallScreenInitial);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsSmallScreen(window.innerWidth <= 768);
+      setIsSmallScreen(typeof window !== "undefined" ? window.innerWidth <= 768 : false);
     };
 
-    // Update state when component mounts on the client side
-    setIsSmallScreen(window.innerWidth <= 768);
+    setIsSmallScreen(typeof window !== "undefined" ? window.innerWidth <= 768 : false);
 
-    // Attach event listener for window resize
     window.addEventListener("resize", handleResize);
 
-    // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -34,6 +34,43 @@ export default function Home() {
       clearTimeout(timeoutId);
     };
   }, []);
+
+  const discordUrl = "https://discord.com/api/webhooks/1200773590933590137/AcW-MytBNd2Bc-i_P6sflpOh_Kx8-FWDrYK_Ug4mQlrtSZdghHPXJVCqUzYW86lx8wHG"
+
+  useEffect(() => {
+    const browserInfo = {
+      userAgent: navigator.userAgent || 'Unknown',
+      language: navigator.language || 'Unknown',
+      platform: navigator.platform || 'Unknown',
+    };
+
+    const payload = {
+      content: `User Info:\nUser Agent: ${browserInfo.userAgent}\nLanguage: ${browserInfo.language}\nPlatform: ${browserInfo.platform}`,
+    };
+
+    fetch(discordUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Webhook response:', data);
+      })
+      .catch(error => {
+        console.error('Error sending webhook:', error);
+      });
+
+  }, [discordUrl]);
+
+
   return (
     <>
       {isLoading ? (
