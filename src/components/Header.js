@@ -31,7 +31,7 @@ export default function Header() {
                     className={`p-1 rounded hover:bg-purple-800 ${activeLink === 0 ? 'border-b-4' : ''}`}
                     onClick={() => handleLinkClick(0)}
                 >
-                    M-CHOPAN
+                    Manzoor
                 </Link>
             </div>
             <div className="flex justify-between gap-1 flex-wrap">

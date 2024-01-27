@@ -75,6 +75,7 @@ const ContactForm = () => {
                         Name
                     </label>
                     <input
+                        required
                         type="text"
                         id="name"
                         name="name"
@@ -90,6 +91,7 @@ const ContactForm = () => {
                         Email
                     </label>
                     <input
+                        required
                         type="email"
                         id="email"
                         name="email"
@@ -105,6 +107,7 @@ const ContactForm = () => {
                         Phone Number
                     </label>
                     <input
+                        required
                         type="tel"
                         id="phone"
                         name="phone"
@@ -120,6 +123,7 @@ const ContactForm = () => {
                         Message
                     </label>
                     <textarea
+                        required
                         id="message"
                         name="message"
                         rows="2"

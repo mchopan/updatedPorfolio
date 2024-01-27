@@ -24,6 +24,8 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import AdminSkillsFormEdit from "@/components/SkillFormEdit"
+import PageLoader from "next/dist/client/page-loader"
+import Cloader from "@/assets/loader"
 
 const SkillPage = () => {
 
@@ -37,7 +39,7 @@ const SkillPage = () => {
 
     const getSkills = async () => {
         try {
-            const res = await fetch("http://localhost:3000/api/skills", {
+            const res = await fetch("https://manzoor-chopan.vercel.app/api/skills", {
                 cache: "no-store",
             });
 
@@ -55,7 +57,7 @@ const SkillPage = () => {
     // Function to handle skill deletion
     const handleDelete = async (id) => {
         try {
-            const res = await fetch(`http://localhost:3000/api/skills/${id}`, {
+            const res = await fetch(`https://manzoor-chopan.vercel.app/api/skills/${id}`, {
                 method: "DELETE",
             });
 
@@ -70,7 +72,7 @@ const SkillPage = () => {
 
     const handleEdit = async (id) => {
         try {
-            const res = await fetch(`http://localhost:3000/api/skills/${id}`, { method: "GET" })
+            const res = await fetch(`https://manzoor-chopan.vercel.app/api/skills/${id}`, { method: "GET" })
             const data = await res.json()
             console.log(data, "edit data")
             setEditSkillName(data.skill.name)
@@ -93,73 +95,75 @@ const SkillPage = () => {
     return (
         <div className="h-[calc(100vh-80px)] bg-[#ADA1EC] flex justify-evenly items-center gap-2 flex-wrap p-2 overflow-y-scroll">
             {
-                allSkills.map(({ _id, name, description, proficiency }) => {
-                    return (
-                        <div key={name} className="w-[400px] cursor-pointer bg-opacity-70 bg-blur p-6 rounded-lg shadow-md hover:shadow-2xl transition duration-300 ease-in-out">
-                            <div className="flex justify-between items-center">
-                                <h2 className="text-2xl font-semibold text-white mb-2">{name}</h2>
-                                {
-                                    userExist ? <div className="flex gap-1">
-                                        <AlertDialog>
-                                            <AlertDialogTrigger className="bg-red-300 p-1 rounded-sm text-white hover:bg-red-400">Delete</AlertDialogTrigger>
-                                            <AlertDialogContent>
-                                                <AlertDialogHeader>
-                                                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                                    <AlertDialogDescription>
-                                                        This action cannot be undone. This will permanently be deleted
-                                                    </AlertDialogDescription>
-                                                </AlertDialogHeader>
-                                                <AlertDialogFooter>
-                                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                    <AlertDialogAction onClick={() => handleDelete(_id)}>Continue</AlertDialogAction>
-                                                </AlertDialogFooter>
-                                            </AlertDialogContent>
-                                        </AlertDialog>
-                                        <Dialog >
-                                            <DialogTrigger onClick={() => { handleEdit(_id) }} className="bg-blue-300 p-1 rounded-sm text-white hover:bg-blue-400">Edit</DialogTrigger>
-                                            <DialogContent>
-                                                <DialogHeader>
-                                                    <DialogTitle>Edit</DialogTitle>
-                                                    <DialogDescription>
-                                                        <AdminSkillsFormEdit
-                                                            _id={_id}
-                                                            editSkillName={editSkillName}
-                                                            setEditSkillName={setEditSkillName}
-                                                            editDescription={editDescription}
-                                                            setEditDescription={setEditDescription}
-                                                            editProficiency={editProficiency}
-                                                            setEditProficiency={setEditProficiency}
-                                                        />
-                                                    </DialogDescription>
-                                                </DialogHeader>
-                                            </DialogContent>
-                                        </Dialog>
-                                    </div> : null
-                                }
-                            </div>
-                            <p className="text-gray-900 mb-4">{description}</p>
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center">
-                                    <svg
-                                        className="w-6 h-6 text-green-400 mr-2"
-                                        fill="none"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                    <span className="text-green-400 font-semibold">{proficiency}%</span>
+                allSkills?.length == 0 ? <Cloader /> : (
+                    allSkills.map(({ _id, name, description, proficiency }) => {
+                        return (
+                            <div key={name} className="w-[400px] cursor-pointer bg-opacity-70 bg-blur p-6 rounded-lg shadow-md hover:shadow-2xl transition duration-300 ease-in-out">
+                                <div className="flex justify-between items-center">
+                                    <h2 className="text-2xl font-semibold text-white mb-2">{name}</h2>
+                                    {
+                                        userExist ? <div className="flex gap-1">
+                                            <AlertDialog>
+                                                <AlertDialogTrigger className="bg-red-300 p-1 rounded-sm text-white hover:bg-red-400">Delete</AlertDialogTrigger>
+                                                <AlertDialogContent>
+                                                    <AlertDialogHeader>
+                                                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                                        <AlertDialogDescription>
+                                                            This action cannot be undone. This will permanently be deleted
+                                                        </AlertDialogDescription>
+                                                    </AlertDialogHeader>
+                                                    <AlertDialogFooter>
+                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                        <AlertDialogAction onClick={() => handleDelete(_id)}>Continue</AlertDialogAction>
+                                                    </AlertDialogFooter>
+                                                </AlertDialogContent>
+                                            </AlertDialog>
+                                            <Dialog >
+                                                <DialogTrigger onClick={() => { handleEdit(_id) }} className="bg-blue-300 p-1 rounded-sm text-white hover:bg-blue-400">Edit</DialogTrigger>
+                                                <DialogContent>
+                                                    <DialogHeader>
+                                                        <DialogTitle>Edit</DialogTitle>
+                                                        <DialogDescription>
+                                                            <AdminSkillsFormEdit
+                                                                _id={_id}
+                                                                editSkillName={editSkillName}
+                                                                setEditSkillName={setEditSkillName}
+                                                                editDescription={editDescription}
+                                                                setEditDescription={setEditDescription}
+                                                                editProficiency={editProficiency}
+                                                                setEditProficiency={setEditProficiency}
+                                                            />
+                                                        </DialogDescription>
+                                                    </DialogHeader>
+                                                </DialogContent>
+                                            </Dialog>
+                                        </div> : null
+                                    }
                                 </div>
-                                <button className="text-gray-700 hover:text-white focus:outline-none">
-                                    Learn More
-                                </button>
+                                <p className="text-gray-900 mb-4">{description}</p>
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center">
+                                        <svg
+                                            className="w-6 h-6 text-green-400 mr-2"
+                                            fill="none"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                        <span className="text-green-400 font-semibold">{proficiency}%</span>
+                                    </div>
+                                    <button className="text-gray-700 hover:text-white focus:outline-none">
+                                        Learn More
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    )
-                })
+                        )
+                    })
+                )
             }
         </div>
     )

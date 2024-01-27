@@ -20,7 +20,7 @@ const LoginPage = () => {
 
     const handleLogin = async () => {
         try {
-            const user = await axios.post("http://localhost:3000/api/users/login", { username, password })
+            const user = await axios.post("https://manzoor-chopan.vercel.app/api/api/users/login", { username, password })
             let userDetails;
             if (user.data.foundUser) {
                 if (typeof window !== "undefined") {

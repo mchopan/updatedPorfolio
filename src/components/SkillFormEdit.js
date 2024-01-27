@@ -30,7 +30,7 @@ const AdminSkillsFormEdit = ({
         };
 
         try {
-            const res = await axios.put(`http://localhost:3000/api/skills/${id}`, data);
+            const res = await axios.put(`https://manzoor-chopan.vercel.app/api/skills/${id}`, data);
             success = res.status === 200;
 
             if (success) {

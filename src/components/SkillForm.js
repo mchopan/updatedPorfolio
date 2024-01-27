@@ -15,7 +15,7 @@ const AdminSkillsForm = () => {
     const addSkill = async () => {
         const data = { name: skillName, proficiency, description, }
         try {
-            const res = await axios.post("http://localhost:3000/api/skills", data);
+            const res = await axios.post("https://manzoor-chopan.vercel.app/api/skills", data);
             toast({
                 title: "Skill Added 😃",
                 description: `Status:${res.statusText}`,

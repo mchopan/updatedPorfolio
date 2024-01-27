@@ -28,7 +28,7 @@ const AdminProjectsFormEdit = (
         console.log(updatedData);
 
         try {
-            const updateRes = await fetch(`http://localhost:3000/api/projects/${id}`, {
+            const updateRes = await fetch(`https://manzoor-chopan.vercel.app/api/projects/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

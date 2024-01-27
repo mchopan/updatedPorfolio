@@ -21,7 +21,7 @@ const AdminProjectsForm = () => {
         };
 
         try {
-            const res = await axios.post("http://localhost:3000/api/projects", data);
+            const res = await axios.post("https://manzoor-chopan.vercel.app/api/projects", data);
             toast({
                 title: "Project Added 😃",
                 description: res.statusText,

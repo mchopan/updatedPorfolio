@@ -38,7 +38,7 @@ const ProjectCard = ({ setProjects, _id, title, description, technologies, link 
 
     const handleDelete = async (id) => {
         try {
-            const res = await fetch(`http://localhost:3000/api/projects/${id}`, {
+            const res = await fetch(`https://manzoor-chopan.vercel.app/api/projects/${id}`, {
                 method: "DELETE",
             });
 
@@ -53,7 +53,7 @@ const ProjectCard = ({ setProjects, _id, title, description, technologies, link 
 
     const handleEdit = async (id) => {
         try {
-            const res = await fetch(`http://localhost:3000/api/projects/${id}`, { method: "GET" })
+            const res = await fetch(`https://manzoor-chopan.vercel.app/api/projects/${id}`, { method: "GET" })
             const data = await res.json()
             console.log(data, "edit data")
             setEditTitle(data.project.title)

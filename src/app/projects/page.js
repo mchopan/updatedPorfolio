@@ -1,4 +1,5 @@
 "use client"
+import Cloader from '@/assets/loader'
 import ProjectCard from '@/components/ProjectCard'
 import { useEffect, useState } from 'react'
 
@@ -10,7 +11,7 @@ const Page = () => {
 
     const getProjects = async () => {
         try {
-            const res = await fetch("http://localhost:3000/api/projects", {
+            const res = await fetch("https://manzoor-chopan.vercel.app/api/projects", {
                 cache: "no-store",
             });
 
@@ -32,20 +33,22 @@ const Page = () => {
     return (
         <div className="h-[calc(100vh-80px)] bg-[#ADA1EC] flex justify-evenly items-center gap-3 flex-wrap overflow-y-scroll p-3">
             {
-                projects.map(({ title, description, link, technologies, _id }) => {
-                    return (
-                        <ProjectCard
-                            key={_id}
-                            setProjects={setProjects}
-                            title={title}
-                            description={description}
-                            link={link}
-                            technologies={technologies}
-                            _id={_id}
+                projects?.length == 0 ? <Cloader /> : (
+                    projects.map(({ title, description, link, technologies, _id }) => {
+                        return (
+                            <ProjectCard
+                                key={_id}
+                                setProjects={setProjects}
+                                title={title}
+                                description={description}
+                                link={link}
+                                technologies={technologies}
+                                _id={_id}
 
-                        />
-                    )
-                })
+                            />
+                        )
+                    })
+                )
             }
         </div>
     )
