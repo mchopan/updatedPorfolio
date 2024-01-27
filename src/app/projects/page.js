@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 
 
-const page = () => {
+const Page = () => {
 
     const [projects, setProjects] = useState([])
 
