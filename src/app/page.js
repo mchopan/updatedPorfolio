@@ -73,14 +73,6 @@ export default function Home() {
 
   return (
     <>
-      {isLoading ? (
-        <div className="h-[calc(100vh-80px)] bg-[#ADA1EC] flex justify-center items-center">
-          <div className="w-[300px]">
-            <Lottie animationData={loader} loop={true} />
-          </div>
-        </div>
-      ) : null}
-
       <div className={`flex flex-shrink-0 justify-end h-[calc(100vh-90px)] bg-white text-slate-800 ${isSmallScreen ? "small-screen" : "big-screen"}`}>
         <div className="w-full">
           <Suspense fallback={<div className="font-extrabold size-11 text-blue-500">Loading</div>}>
