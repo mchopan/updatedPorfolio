@@ -9,10 +9,11 @@ const AboutPage = () => {
                     As a seasoned full-stack web app developer with nearly three years of
                     experience, I specialize in bringing unconventional ideas to life.
                     Obsessed with unique design and user-friendly functionality, I thrive
-                    on turning artistic visions into seamless digital experiences. Let's
+                    on turning artistic visions into seamless digital experiences. Let&apos;s
                     collaborate and turn your unconventional concepts into exceptional
                     projects.
                 </p>
+
             </div>
             <div className="rounded-full w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4 mx-auto md:mx-0 bg-transparent z-10 border overflow-hidden">
                 <Image src={profile} width={400} height={400} alt="he" />
