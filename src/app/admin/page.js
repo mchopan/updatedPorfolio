@@ -5,29 +5,29 @@ import { useToast } from '@/components/ui/use-toast';
 import { useAppContext } from '@/context';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+
 const AdminPage = () => {
-
-    const { user, setUser } = useAppContext()
-
-    const router = useRouter()
-    const { toast } = useToast()
+    const { user, setUser } = useAppContext();
+    const router = useRouter();
+    const { toast } = useToast();
 
     const [showSkillsForm, setShowSkillsForm] = useState(true);
 
     const handleLogout = async () => {
-        await localStorage.removeItem("PortFolioUser")
+        await localStorage.removeItem("PortFolioUser");
         setUser();
         toast({
             title: `Logout Successfully😃`,
             description: ``,
-        })
-        router.push('/')
-    }
+        });
+        router.push('/');
+    };
+
     return (
-        <div className="h-[calc(100vh-80px)] bg-[#ADA1EC] flex justify-center items-center flex-col  p-2 overflow-y-scroll">
-            <div className='w-[500px]'>
-                <div className="flex justify-between">
-                    <div className=' flex space-x-4 mb-4'>
+        <div className="h-[calc(100vh-90px)] bg-[#ADA1EC] flex flex-col p-2 overflow-y-scroll">
+            <div className="max-w-screen-lg mx-auto">
+                <div className="flex flex-col items-center mb-4">
+                    <div className="flex space-x-4 mb-4">
                         <button
                             onClick={() => setShowSkillsForm(true)}
                             className={`px-4 py-2 font-semibold rounded ${showSkillsForm ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'
@@ -43,16 +43,16 @@ const AdminPage = () => {
                             Projects
                         </button>
                     </div>
-                    <div>
-                        <button
-                            onClick={handleLogout}
-                            className="px-4 py-2 font-semibold rounded bg-orange-400 hover:bg-orange-200"
-                        >
-                            Logout
-                        </button>
-                    </div>
+                    <button
+                        onClick={handleLogout}
+                        className="px-4 py-2 font-semibold rounded bg-orange-400 hover:bg-orange-200"
+                    >
+                        Logout
+                    </button>
                 </div>
-                {showSkillsForm ? <AdminSkillsForm /> : <AdminProjectsForm />}
+                <div className="w-full">
+                    {showSkillsForm ? <AdminSkillsForm /> : <AdminProjectsForm />}
+                </div>
             </div>
         </div>
     );
