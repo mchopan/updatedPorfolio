@@ -23,7 +23,7 @@ export default function Header() {
 
 
     return (
-        <div className="bg-purple-300 text-white h-auto p-2 flex justify-around items-center">
+        <div className="bg-[#ADA1EC] text-white h-auto p-2 flex justify-around items-center">
             <div className="">
                 <Link
                     href={'/'}

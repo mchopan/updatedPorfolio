@@ -3,14 +3,18 @@ import React, { useState } from 'react';
 import { useToast } from "@/components/ui/use-toast"
 
 
-const AdminProjectsForm = () => {
+const AdminProjectsForm = ({
+    projectTitle,
+    setProjectTitle,
+    projectDescription,
+    setProjectDescription,
+    technologies,
+    setTechnologies,
+    projectLink,
+    setProjectLink,
+}) => {
 
     const { toast } = useToast()
-
-    const [projectTitle, setProjectTitle] = useState('');
-    const [projectDescription, setProjectDescription] = useState('');
-    const [technologies, setTechnologies] = useState('');
-    const [projectLink, setProjectLink] = useState('');
 
     const addProject = async () => {
         const data = {

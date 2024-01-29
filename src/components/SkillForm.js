@@ -4,13 +4,15 @@ import React, { useState } from 'react';
 
 import { useToast } from "@/components/ui/use-toast"
 
-const AdminSkillsForm = () => {
+const AdminSkillsForm = ({
+    skillName, setSkillName,
+    description, setDescription,
+    proficiency, setProficiency
+}) => {
 
     const { toast } = useToast()
 
-    const [skillName, setSkillName] = useState('');
-    const [description, setDescription] = useState('');
-    const [proficiency, setProficiency] = useState(70);
+
 
     const addSkill = async () => {
         const data = { name: skillName, proficiency, description, }
