@@ -1,7 +1,5 @@
 "use client"
 import React, { Suspense, useEffect, useState } from "react";
-import Lottie from "lottie-react";
-import loader from "@/assets/loader.json";
 import Spline from "@splinetool/react-spline";
 
 

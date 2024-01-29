@@ -15,7 +15,6 @@ export default function Header() {
     };
 
     useEffect(() => {
-        // Retrieve the active link from localStorage on component mount
         const storedActiveLink = localStorage.getItem("activeLink");
         if (storedActiveLink !== null) {
             setActiveLink(parseInt(storedActiveLink));

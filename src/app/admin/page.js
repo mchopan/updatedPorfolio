@@ -3,13 +3,25 @@ import AdminProjectsForm from '@/components/ProjectForm';
 import AdminSkillsForm from '@/components/SkillForm';
 import { useToast } from '@/components/ui/use-toast';
 import { useAppContext } from '@/context';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import { redirect, useRouter } from 'next/navigation';
+import React, { useLayoutEffect, useState } from 'react';
 
 const AdminPage = () => {
-    const { user, setUser } = useAppContext();
+
+
+    const { user, setUser } = useAppContext()
+
     const router = useRouter();
     const { toast } = useToast();
+
+    useLayoutEffect(() => {
+        const userDetails = localStorage.getItem("PortFolioUser")
+        const loggedInUser = JSON.parse(userDetails);
+        console.log(loggedInUser, "uere in admin")
+        if (!loggedInUser) {
+            redirect("/login")
+        }
+    }, [])
 
     const [showSkillsForm, setShowSkillsForm] = useState(true);
 
