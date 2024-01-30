@@ -3,16 +3,36 @@
 import { useAppContext } from "@/context"
 import Link from "next/link"
 import { useEffect, useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useToast } from '@/components/ui/use-toast';
+import { useRouter } from "next/navigation";
+
 
 export default function Header() {
 
-    const { user } = useAppContext();
+
+    const router = useRouter();
+    const { toast } = useToast();
+
+    const { user, setUser } = useAppContext();
     const [activeLink, setActiveLink] = useState(null);
 
     const handleLinkClick = (index) => {
         setActiveLink(index);
         localStorage.setItem("activeLink", index);
     };
+
+    const handleLogout = async (index) => {
+        setActiveLink(index);
+        localStorage.setItem("activeLink", index);
+        await localStorage.removeItem("PortFolioUser");
+        setUser();
+        toast({
+            title: `Logout Successfully😃`,
+            description: ``,
+        });
+        router.push('/login');
+    }
 
     useEffect(() => {
         const storedActiveLink = localStorage.getItem("activeLink");
@@ -74,10 +94,11 @@ export default function Header() {
                     ) : (
                         <Link
                             className={`p-1 rounded hover:bg-purple-800 ${activeLink === 6 ? 'border-b-4' : ''}`}
-                            href={'/admin'}
-                            onClick={() => handleLinkClick(6)}
+                            href={'/skills'}
+                            onClick={() => handleLogout(6)}
                         >
-                            {user?.username}
+                            Logout
+
                         </Link>
                     )}
                 </div>

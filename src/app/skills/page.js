@@ -25,16 +25,18 @@ import {
 } from "@/components/ui/dialog"
 
 import AdminSkillsFormEdit from "@/components/SkillFormEdit"
-import PageLoader from "next/dist/client/page-loader"
 import Cloader from "@/assets/loader"
 import AdminSkillsForm from "@/components/SkillForm"
 import { useAppContext } from "@/context"
+import { useToast } from "@/components/ui/use-toast"
 
 const SkillPage = () => {
 
     const { user, setUser } = useAppContext()
 
+
     const [allSkills, setAllSkills] = useState([]);
+    const { toast } = useToast()
 
     const [skillName, setSkillName] = useState('');
     const [description, setDescription] = useState('');
@@ -74,9 +76,17 @@ const SkillPage = () => {
             if (!res.ok) {
                 throw new Error("Failed to delete Skill");
             }
+            toast({
+                title: `Skill Deleted`,
+                description: ``,
+            })
             setAllSkills((prevSkills) => prevSkills.filter((skill) => skill._id !== id));
         } catch (error) {
             console.error("Error deleting skill:", error.message);
+            toast({
+                title: `${error.message}😃`,
+                description: `Status:${error.status}`,
+            })
         }
     };
 
@@ -84,7 +94,6 @@ const SkillPage = () => {
         try {
             const res = await fetch(`https://manzoor-chopan.vercel.app/api/skills/${id}`, { method: "GET" })
             const data = await res.json()
-            console.log(data, "edit data")
             setEditSkillName(data.skill.name)
             setEditDescription(data.skill.description)
             setEditProficiency(data.skill.proficiency)

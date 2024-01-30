@@ -23,6 +23,7 @@ import {
 
 import AdminProjectsFormEdit from "./ProjectFormEdit";
 import { useState } from "react";
+import { useToast } from "./ui/use-toast";
 
 
 
@@ -36,6 +37,8 @@ const ProjectCard = ({ setProjects, _id, title, description, technologies, link 
     const [editDescription, setEditDescription] = useState('');
     const [editTechnologies, setEditTechnologies] = useState([]);
 
+    const { toast } = useToast()
+
     const handleDelete = async (id) => {
         try {
             const res = await fetch(`https://manzoor-chopan.vercel.app/api/projects/${id}`, {
@@ -45,6 +48,10 @@ const ProjectCard = ({ setProjects, _id, title, description, technologies, link 
             if (!res.ok) {
                 throw new Error("Failed to delete Skill");
             }
+            toast({
+                title: `Project Deleted`,
+                description: ``,
+            })
             setProjects((prevProjects) => prevProjects.filter((project) => project._id !== id));
         } catch (error) {
             console.error("Error deleting skill:", error.message);

@@ -1,5 +1,6 @@
 "use client"
 
+import BtnLoader from "@/assets/btnLoader";
 import { useToast } from "@/components/ui/use-toast";
 import { useAppContext } from "@/context";
 import axios from "axios";
@@ -17,8 +18,11 @@ const LoginPage = () => {
 
     const [username, setUsername] = useState()
     const [password, setPassword] = useState()
+    const [loader, setLoader] = useState(false)
+
 
     const handleLogin = async () => {
+        setLoader(true)
         try {
             const user = await axios.post("https://manzoor-chopan.vercel.app/api/users/login", { username, password })
             let userDetails;
@@ -32,9 +36,11 @@ const LoginPage = () => {
                     title: `Welcome Back ${user.data.foundUser.username}😃`,
                     description: `Status:${user.statusText}`,
                 })
-                router.push("/admin")
+                setLoader(false)
+                router.push("/skills")
             }
             else {
+                setLoader(false)
                 toast({
                     title: `Sorry ${user.data.foundUser.username}😃`,
                     description: `Status:${user.statusText}`,
@@ -42,6 +48,7 @@ const LoginPage = () => {
             }
         }
         catch (error) {
+            setLoader(false)
             toast({
                 title: `Error:  ${error.message}`,
                 description: ``,
@@ -91,7 +98,7 @@ const LoginPage = () => {
                     type="button"
                     className="bg-blue-500 text-white p-2 rounded w-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
                 >
-                    Login
+                    {loader ? <BtnLoader /> : "Login"}
                 </button>
             </form>
         </div>
